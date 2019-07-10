@@ -1,4 +1,4 @@
-# Lamp-Light
+# Lamp-Light 💡
 
 ## Project setup
 ```
