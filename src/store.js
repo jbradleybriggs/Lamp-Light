@@ -5,9 +5,11 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    searchParam: () => {
 
+    }
   },
-  mutations: {
+  mutations: { //sync
 
   },
   actions: {
