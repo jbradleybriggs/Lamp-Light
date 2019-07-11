@@ -1,5 +1,5 @@
 <template>
-  <div class="container-fluid">
+  <div id="tableContainer">
     <table class="table table-striped table-dark table-hover">
       <tr>
         <!-- HEADINGS -->
@@ -37,18 +37,22 @@ export default {
 </script>
 
 <style>
-table {
+/* table {
   width: 100%;
   border-collapse: collapse;
-}
-
+} */
 td,
 th {
   text-align: left;
 }
-
 tr:hover {
   background-color: yellow;
   color: black;
+}
+#tableContainer {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  width: 100%;
 }
 </style>

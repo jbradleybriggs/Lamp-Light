@@ -1,27 +1,27 @@
 export function getData(op = "get", fields = [], conditions = {}, options = {}) {
     return new Promise((resolve, reject) => {
         var reqUrl = `http://localhost:8082/`;
+        var dbRequest = {
+            op: op,
+            host: 'localhost',
+            username: 'root',
+            password: '0f6fNF9D5Mqf0KTW',
+            db: "lamp_light",
+            table: "movies",
+            fields: fields,
+            conditions: conditions
+        };
         // var dbRequest = {
-        //     op: op,
-        //     host: 'localhost',
+        //     host: '192.168.21.51',
         //     username: 'root',
         //     password: 'hcet',
-        //     db: "lamp_light",
-        //     table: "movies",
+        //     db: "accounting_state_static",
+        //     table: "client",
+        //     op: op,
         //     fields: fields,
-        //     conditions: conditions
+        //     conditions: conditions,
+        //     options: options
         // };
-        var dbRequest = {
-            host: '192.168.21.51',
-            username: 'root',
-            password: 'hcet',
-            db: "accounting_state_static",
-            table: "client",
-            op: op,
-            fields: fields,
-            conditions: conditions,
-            options: options
-        };
         var req = new Request(reqUrl, {
             method: "POST",
             headers: {
