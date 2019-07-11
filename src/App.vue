@@ -2,7 +2,7 @@
   <div id="app">
     <b-dropdown size="sm" text="View" class="m-2" id="dropDownSel">
       <b-dropdown-item-button @click="this.listView = true">List</b-dropdown-item-button>
-      <b-dropdown-item-button>Cover View</b-dropdown-item-button>
+      <b-dropdown-item-button @click="this.listView = false">Cover View</b-dropdown-item-button>
     </b-dropdown>
     <img id="logo" alt="Logo" src="./assets/icon.png" width="100" />
 
@@ -20,6 +20,7 @@
     </div>
 
     <Table v-if="this.listView" :columns="columns" :rows="rows" :searchValue="searchValue" />
+    <!-- <img v-if="this.listView" id="logo2" alt="Logo" src="./assets/icon.png" width="100" /> -->
   </div>
 </template>
 
