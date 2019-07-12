@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div id="sideBar">
-      <img id="movieIcon" alt="Logo" src="./assets/svgs/regular/play-circle.svg" width="35" />
+      <img id="movieIcon" alt="Logo" src="./assets/svg/regular/play-circle.svg" width="35" />
     </div>
     <div id="mainContainer">
       <div id="topBar">
@@ -22,20 +22,16 @@
         </div>
       </div>
       <div id="infoContainer">
-        <!-- <Table v-if="this.listView" :columns="columns" :rows="rows" :searchValue="searchValue"/> -->
+        <!-- <Cover :caption="'Hello There'" :source="'../public/covers/Cover (11).jpg'" /> -->
+        <!-- <Table :columns="columns" :rows="rows" :searchValue="searchValue" /> -->
         <!-- <b-img-lazy v-bind="mainProps" :src="getImageUrl(80)" alt="Image 1"></b-img-lazy> -->
         <div id="cover0" class="coverContainer">
-          <b-img-lazy
-            src="../public/covers/Cover (11).jpg"
-            alt="Cover 0"
-            id="pic0"
-            class="coverImg"
-          ></b-img-lazy>
-          <div id="label0" class="coverLabel">Some Movie</div>
+          <b-img-lazy :src="this.rows.poster" alt="Cover 0" id="pic0" class="coverImg"></b-img-lazy>
+          <div id="label0" class="coverLabel">{{getTitle(0)}}</div>
         </div>
         <div id="cover1" class="coverContainer">
           <b-img-lazy src="../public/covers/Cover (2).jpg" alt="Cover 0" id="pic1" class="coverImg"></b-img-lazy>
-          <div id="label1" class="coverLabel">Another Movie</div>
+          <div id="label1" class="coverLabel">{{getTitle(1)}}</div>
         </div>
         <div id="cover2" class="coverContainer">
           <b-img-lazy src="../public/covers/Cover (3).jpg" alt="Cover 0" id="pic2" class="coverImg"></b-img-lazy>
@@ -49,7 +45,9 @@
 
 <script>
 import Table from "./components/Table.vue";
+// import Cover from "./components/Cover.vue";
 import { getData } from "./BackEnd.js";
+import { scanFolder } from "./BackEnd.js";
 
 // function tryThis() {
 //   console.log(this.$root);
@@ -59,24 +57,51 @@ export default {
   name: "app",
   components: {
     Table
+    // Cover
   },
   data: () => ({
     error: "",
     columns: [],
     rows: [],
-    searchValue: "",
-    listView: true
+    searchValue: ""
+    // listView: true
   }),
   mounted() {
-    getData("get", ["title", "year", "genres", "vote_average"], {}).then(
-      obj => {
+    getData(
+      "get",
+      [
+        "title as Title",
+        "year as Year",
+        "genres as Genre",
+        "vote_average as Rating",
+        "overview as Plot",
+        "poster"
+      ],
+      {}
+    ).then(obj => {
+      // getData("get", [], {}).then(obj => {
+      if (obj.columns && obj.rows && obj.columns.length > 0) {
         this.rows = obj.rows;
         this.columns = obj.columns;
+      } else {
+        scanFolder(
+          "/home/jason/Videos/Movies",
+          [".mp4", ".mkv", ".avi"],
+          true,
+          false
+        ).then(res => {
+          console.log(res);
+        });
       }
-    );
+    });
   },
-  methods: {
-    // tryThis
+  watch: {
+    getTitle: function(s) {
+      if (this.rows) {
+        console.log("WHAT", s);
+        return this.rows[s].Title;
+      } else return "";
+    }
   }
 };
 </script>
@@ -110,12 +135,12 @@ html {
 }
 
 #sideBar {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: 50px;
-  background-color: yellow;
+  background-color: rgb(255, 217, 0);
 }
 
 #mainContainer {
@@ -161,10 +186,10 @@ html {
   width: 25vw;
   height: 37.5vw;
   background-color: black;
+  float: left;
 }
 
 .coverImg {
-  /* position: absolute; */
   width: 95%;
   height: 95%;
 }

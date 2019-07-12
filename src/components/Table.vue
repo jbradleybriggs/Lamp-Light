@@ -44,9 +44,12 @@ export default {
 td,
 th {
   text-align: left;
+  /* text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden; */
 }
 tr:hover {
-  background-color: yellow;
+  background-color: rgb(245, 226, 58);
   color: black;
 }
 #tableContainer {
